@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root, :root[data-theme="dark"] {
+  --bg-primary:           #0d1117;
+  --bg-secondary:         #161b22;
+  --bg-tertiary:          #21262d;
+  --bg-elevated:          #30363d;
+  --bg-overlay:           rgba(1, 4, 9, 0.85);
+
+  --border-default:       #30363d;
+  --border-muted:         #21262d;
+  --border-active:        #388bfd;
+  --border-subtle:        rgba(48, 54, 61, 0.5);
+
+  --text-primary:         #e6edf3;
+  --text-secondary:       #8b949e;
+  --text-muted:           #484f58;
+  --text-link:            #58a6ff;
+  --text-on-accent:       #ffffff;
+
+  --accent-blue:          #388bfd;
+  --accent-blue-subtle:   rgba(56, 139, 253, 0.1);
+  --accent-green:         #3fb950;
+  --accent-green-subtle:  rgba(63, 185, 80, 0.1);
+  --accent-orange:        #d29922;
+  --accent-orange-subtle: rgba(210, 153, 34, 0.1);
+  --accent-red:           #f85149;
+  --accent-red-subtle:    rgba(248, 81, 73, 0.1);
+  --accent-purple:        #a371f7;
+  --accent-purple-subtle: rgba(163, 113, 247, 0.1);
+}
+
+:root[data-theme="light"] {
+  --bg-primary:           #ffffff;
+  --bg-secondary:         #f6f8fa;
+  --bg-tertiary:          #eaeef2;
+  --bg-elevated:          #ffffff;
+  --bg-overlay:           rgba(27, 31, 36, 0.5);
+
+  --border-default:       #d0d7de;
+  --border-muted:         #eaeef2;
+  --border-active:        #0969da;
+  --border-subtle:        rgba(208, 215, 222, 0.5);
+
+  --text-primary:         #1f2328;
+  --text-secondary:       #656d76;
+  --text-muted:           #9198a1;
+  --text-link:            #0969da;
+  --text-on-accent:       #ffffff;
+
+  --accent-blue:          #0969da;
+  --accent-blue-subtle:   rgba(9, 105, 218, 0.08);
+  --accent-green:         #1a7f37;
+  --accent-green-subtle:  rgba(26, 127, 55, 0.08);
+  --accent-orange:        #9a6700;
+  --accent-orange-subtle: rgba(154, 103, 0, 0.08);
+  --accent-red:           #cf222e;
+  --accent-red-subtle:    rgba(207, 34, 46, 0.08);
+  --accent-purple:        #8250df;
+  --accent-purple-subtle: rgba(130, 80, 223, 0.08);
+}
+
+:root {
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-ui:   -apple-system, 'Segoe UI', 'SF Pro Text', sans-serif;
+
+  --text-2xs:  10px;
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 14px;
+  --text-md:   16px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+
+  --line-body: 1.7;
+  --line-ui:   1.4;
+  --line-code: 1.6;
+}
+
+:root {
+  --space-1:  4px;  --space-2:  8px;
+  --space-3:  12px; --space-4:  16px;
+  --space-5:  20px; --space-6:  24px;
+  --space-8:  32px; --space-10: 40px;
+}
+
+:root {
+  --radius-sm:       4px;
+  --radius-md:       6px;
+  --radius-lg:       8px;
+
+  --transition-fast: 80ms ease;
+  --transition-base: 150ms ease;
+  --transition-slow: 220ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation:  none !important;
+  }
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-active);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  line-height: var(--line-body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-blue);
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
