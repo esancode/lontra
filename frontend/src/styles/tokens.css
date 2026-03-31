@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-:root, :root[data-theme="dark"] {
-  --bg-primary:           #0d1117;
-  --bg-secondary:         #161b22;
-  --bg-tertiary:          #21262d;
-  --bg-elevated:          #30363d;
-  --bg-overlay:           rgba(1, 4, 9, 0.85);
+:root, :root[data-theme="dark"], [data-theme="dark"] {
+  --bg-primary:           #0f1419;
+  --bg-secondary:         #171d24;
+  --bg-tertiary:          #1e2630;
+  --bg-elevated:          #2a3340;
+  --bg-overlay:           rgba(8, 12, 18, 0.85);
 
-  --border-default:       #30363d;
-  --border-muted:         #21262d;
+  --border-default:       #2a3340;
+  --border-muted:         #1e2630;
   --border-active:        #388bfd;
-  --border-subtle:        rgba(48, 54, 61, 0.5);
+  --border-subtle:        rgba(42, 51, 64, 0.5);
 
   --text-primary:         #e6edf3;
   --text-secondary:       #8b949e;
-  --text-muted:           #484f58;
+  --text-muted:           #505a68;
   --text-link:            #58a6ff;
   --text-on-accent:       #ffffff;
 
@@ -28,41 +28,20 @@
   --accent-red-subtle:    rgba(248, 81, 73, 0.1);
   --accent-purple:        #a371f7;
   --accent-purple-subtle: rgba(163, 113, 247, 0.1);
+
+  --shadow-sm:            0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md:            0 4px 8px -2px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg:            0 10px 20px -4px rgba(0, 0, 0, 0.5), 0 4px 8px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl:            0 20px 40px -8px rgba(0, 0, 0, 0.6), 0 10px 16px -4px rgba(0, 0, 0, 0.4);
+  --shadow-inner:         inset 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  --shadow-none:          none;
 }
 
-:root[data-theme="light"] {
-  --bg-primary:           #ffffff;
-  --bg-secondary:         #f6f8fa;
-  --bg-tertiary:          #eaeef2;
-  --bg-elevated:          #ffffff;
-  --bg-overlay:           rgba(27, 31, 36, 0.5);
 
-  --border-default:       #d0d7de;
-  --border-muted:         #eaeef2;
-  --border-active:        #0969da;
-  --border-subtle:        rgba(208, 215, 222, 0.5);
-
-  --text-primary:         #1f2328;
-  --text-secondary:       #656d76;
-  --text-muted:           #9198a1;
-  --text-link:            #0969da;
-  --text-on-accent:       #ffffff;
-
-  --accent-blue:          #0969da;
-  --accent-blue-subtle:   rgba(9, 105, 218, 0.08);
-  --accent-green:         #1a7f37;
-  --accent-green-subtle:  rgba(26, 127, 55, 0.08);
-  --accent-orange:        #9a6700;
-  --accent-orange-subtle: rgba(154, 103, 0, 0.08);
-  --accent-red:           #cf222e;
-  --accent-red-subtle:    rgba(207, 34, 46, 0.08);
-  --accent-purple:        #8250df;
-  --accent-purple-subtle: rgba(130, 80, 223, 0.08);
-}
 
 :root {
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
-  --font-ui:   -apple-system, 'Segoe UI', 'SF Pro Text', sans-serif;
+  --font-ui:   'Inter', -apple-system, 'Segoe UI', 'SF Pro Text', sans-serif;
 
   --text-2xs:  10px;
   --text-xs:   11px;
@@ -92,6 +71,10 @@
   --radius-sm:       4px;
   --radius-md:       6px;
   --radius-lg:       8px;
+
+  --topbar-height:   48px;
+
+  --accent-blue-rgb: 56, 139, 253;
 
   --transition-fast: 80ms ease;
   --transition-base: 150ms ease;

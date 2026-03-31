@@ -22,7 +22,7 @@ const noteSchema = new mongoose.Schema({
         default: null
     },
     content: {
-        type: mongoose.Schema.Types.Mixed, 
+        type: mongoose.Schema.Types.Mixed,
         default: {}
     },
     linkedNotes: [{
@@ -36,11 +36,16 @@ const noteSchema = new mongoose.Schema({
     order: {
         type: Number,
         default: 0
+    },
+    ownerId: {
+        type: String,
+        required: true,
+        index: true
     }
 }, { timestamps: true });
 
-noteSchema.index({ title: 'text' });
-noteSchema.index({ boxId: 1 });
+noteSchema.index({ "$**": "text" });
+noteSchema.index({ boxId: 1, ownerId: 1 });
 noteSchema.index({ order: 1 });
 
 const Note = mongoose.model("Note", noteSchema);

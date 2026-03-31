@@ -17,10 +17,15 @@ const boxSchema = new mongoose.Schema({
   order: {
     type: Number,
     default: 0
+  },
+  ownerId: {
+    type: String,
+    required: true,
+    index: true
   }
 }, { timestamps: true });
 
-boxSchema.index({ parentId: 1 });
+boxSchema.index({ parentId: 1, ownerId: 1 });
 boxSchema.index({ order: 1 });
 
 export default mongoose.model('Box', boxSchema);

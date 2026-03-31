@@ -1,34 +1,3 @@
-:root {
-  --bg-primary: #191919;
-  --bg-secondary: #202020;
-  --bg-tertiary: #252525;
-  --bg-elevated: #2c2c2c;
-  
-  --text-primary: #ffffff;
-  --text-secondary: #e3e3e3;
-  --text-muted: #9b9b9b;
-  --text-on-accent: #ffffff;
-  
-  --border-default: #303030;
-  --border-muted: #2a2a2a;
-  --border-active: #404040;
-  
-  --accent-blue: #388bfd;
-  --accent-blue-subtle: rgba(56, 139, 253, 0.15);
-  
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  
-  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
@@ -59,6 +28,15 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-active);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .editor-scroll-container {
@@ -100,6 +78,16 @@
   background: none;
 }
 
+.code-block-pre {
+  color: #c9d1d9;
+  background: transparent;
+}
+
+.code-block-pre code {
+  color: inherit;
+  background: transparent;
+}
+
 .hljs { color: #c9d1d9; background: #0d1117; }
 .hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-variable.language_ { color: #ff7b72; }
 .hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-title.function_ { color: #d2a8ff; }
@@ -133,19 +121,33 @@
 }
 
 .tiptap table {
-  @apply border-collapse table-fixed w-full my-4 border border-[var(--border-muted)];
+  @apply border-collapse table-fixed w-full my-6 overflow-hidden;
+  border: 1px solid var(--border-muted);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .tiptap th, .tiptap td {
-  @apply border border-[var(--border-muted)] p-2 text-left align-top min-w-[100px] relative;
+  @apply border border-[var(--border-muted)] p-3 text-left align-top min-w-[120px] relative;
+  font-size: 13px;
+  line-height: 1.5;
+  transition: background 100ms ease;
+}
+
+.tiptap td:hover {
+  background: var(--bg-tertiary);
 }
 
 .tiptap th {
-  @apply bg-[var(--bg-tertiary)] font-semibold;
+  @apply font-semibold text-[var(--text-secondary)] uppercase tracking-wider;
+  font-size: 11px;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .tiptap .selectedCell:after {
-  @apply absolute inset-0 bg-[var(--accent-blue-subtle)] pointer-events-none content-[''];
+  @apply absolute inset-0 pointer-events-none content-[''];
+  background: rgba(var(--accent-blue-rgb), 0.12);
   z-index: 2;
 }
 
@@ -244,8 +246,86 @@ ul[data-type="taskList"] li[data-checked="true"] > div { text-decoration: line-t
 
 .code-block-wrapper ::-webkit-scrollbar-track {
   background: #0d1117;
+}.tiptap .ProseMirror-gapcursor {
+  @apply relative pointer-events-none;
 }
 
+.tiptap .ProseMirror-gapcursor:after {
+  @apply absolute block border-t-2 border-[var(--accent-blue)] w-full;
+  content: "";
+  top: -2px;
+  animation: gapcursor-blink 1.1s steps(2, start) infinite;
+}
 
+@keyframes gapcursor-blink {
+  to {
+    visibility: hidden;
+  }
+}
 
+.tiptap.ProseMirror-focused .ProseMirror-gapcursor {
+  @apply block;
+}
 
+/* Espaçamento extra para facilitar clique entre blocos complexos */
+.tiptap > li {
+  @apply mb-1;
+}
+
+.tiptap > * {
+  @apply mb-4;
+}
+
+.tiptap .callout-block,
+.tiptap .bookmark-block,
+.tiptap .attachment-block {
+  @apply cursor-default;
+}
+
+/* --- PRINT / PDF EXPORT STYLES --- */
+@media print {
+  body {
+    background-color: #0f1419 !important; /* bg-primary */
+    color: #e6edf3 !important; /* text-primary */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Esconder barras superiores, menus contextuais e ícones de arraste */
+  .no-print,
+  .sidebar,
+  button,
+  .wiki-menu,
+  .slash-menu,
+  nav,
+  .drag-handle-container,
+  #home-top-bar {
+    display: none !important;
+  }
+  
+  /* Resetar rolagem para mostrar todas as páginas e remover limites width */
+  #main-scroll-container,
+  .editor-content-wrapper,
+  .editor-scroll-container {
+    overflow: visible !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 40px !important;
+    margin: 0 !important;
+  }
+
+  /* Impedir quebras bizarras de página */
+  h1, h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  img {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    max-height: 90vh;
+  }
+  table, tr {
+    page-break-inside: avoid;
+  }
+}
