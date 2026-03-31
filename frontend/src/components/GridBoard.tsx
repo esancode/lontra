@@ -20,9 +20,10 @@ interface SortableBoxCardProps {
   isDragOver: boolean;
   selected: boolean;
   onSelect: (id: string, isShift: boolean) => void;
+  hasActiveSelection: boolean;
 }
 
-const SortableBoxCard = React.memo<SortableBoxCardProps>(({ box, onAction, isDragOver, selected, onSelect }) => {
+const SortableBoxCard = React.memo<SortableBoxCardProps>(({ box, onAction, isDragOver, selected, onSelect, hasActiveSelection }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: `box-${box._id}`,
     data: { type: 'box', id: box._id, parentId: box.parentId },
@@ -39,13 +40,20 @@ const SortableBoxCard = React.memo<SortableBoxCardProps>(({ box, onAction, isDra
     if (onAction) onAction(box._id)
   }, [box._id, onAction])
 
-  const handleSelect = useCallback((e: React.MouseEvent) => {
-    onSelect(box._id, e.shiftKey)
-  }, [box._id, onSelect])
+  const handleSelect = useCallback((id: string, isShift: boolean) => {
+    onSelect(id, isShift)
+  }, [onSelect])
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners} onClick={handleSelect}>
-      <BoxCard box={box} onEnter={handleEnter} isDragOver={isDragOver} selected={selected} />
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <BoxCard
+        box={box}
+        onEnter={handleEnter}
+        isDragOver={isDragOver}
+        selected={selected}
+        onSelect={handleSelect}
+        hasActiveSelection={hasActiveSelection}
+      />
     </div>
   )
 })
@@ -55,9 +63,10 @@ interface SortableNoteCardProps {
   onAction: (id: string) => void;
   selected: boolean;
   onSelect: (id: string, isShift: boolean) => void;
+  hasActiveSelection: boolean;
 }
 
-const SortableNoteCard = React.memo<SortableNoteCardProps>(({ note, onAction, selected, onSelect }) => {
+const SortableNoteCard = React.memo<SortableNoteCardProps>(({ note, onAction, selected, onSelect, hasActiveSelection }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: `note-${note._id}`,
     data: { type: 'note', id: note._id, boxId: note.boxId },
@@ -74,13 +83,13 @@ const SortableNoteCard = React.memo<SortableNoteCardProps>(({ note, onAction, se
     if (onAction) onAction(note._id)
   }, [note._id, onAction])
 
-  const handleSelect = useCallback((e: React.MouseEvent) => {
-    onSelect(note._id, e.shiftKey)
-  }, [note._id, onSelect])
+  const handleSelect = useCallback((id: string, isShift: boolean) => {
+    onSelect(id, isShift)
+  }, [onSelect])
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners} onClick={handleSelect}>
-      <NoteCard note={note} onOpen={handleOpen} selected={selected} />
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <NoteCard note={note} onOpen={handleOpen} selected={selected} onSelect={handleSelect} hasActiveSelection={hasActiveSelection} />
     </div>
   )
 })
@@ -132,7 +141,6 @@ const GridBoard = React.memo<GridBoardProps>(({ boxes, notes, onGoToBox, onGoToN
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
-  // Limpa selecionados se mudar de pasta
   React.useEffect(() => {
     setSelectedIds(new Set())
   }, [selectedBoxId])
@@ -155,17 +163,23 @@ const GridBoard = React.memo<GridBoardProps>(({ boxes, notes, onGoToBox, onGoToN
     })
   }, [])
 
+  const clearSelection = useCallback(() => {
+    setSelectedIds(prev => prev.size > 0 ? new Set() : prev)
+  }, [])
+
   React.useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // Se não clicou dentro de um card ou botão de bulk action, limpa a seleção
-      if (!target.closest('.card-container') && !target.closest('.bulk-action-bar')) {
-        setSelectedIds(prev => prev.size > 0 ? new Set() : prev);
+      const target = e.target as HTMLElement
+      const isInsideCard = target.closest('.card-container')
+      const isInsideBulkBar = target.closest('.bulk-action-bar')
+      const isInsideModal = target.closest('[role="dialog"]') || target.closest('.fixed')
+      if (!isInsideCard && !isInsideBulkBar && !isInsideModal) {
+        clearSelection()
       }
-    };
-    window.addEventListener('click', handleGlobalClick);
-    return () => window.removeEventListener('click', handleGlobalClick);
-  }, []);
+    }
+    window.addEventListener('mousedown', handleGlobalClick)
+    return () => window.removeEventListener('mousedown', handleGlobalClick)
+  }, [clearSelection])
 
   const boxMap = useMemo(() => {
     const map = new Map<string, Box>()
@@ -203,6 +217,7 @@ const GridBoard = React.memo<GridBoardProps>(({ boxes, notes, onGoToBox, onGoToN
                     isDragOver={isOver}
                     selected={selectedIds.has(box._id)}
                     onSelect={handleSelect}
+                    hasActiveSelection={selectedIds.size > 0}
                   />
                 </BoxDropZone>
               </motion.div>
@@ -224,6 +239,7 @@ const GridBoard = React.memo<GridBoardProps>(({ boxes, notes, onGoToBox, onGoToN
                   onAction={onGoToNote}
                   selected={selectedIds.has(note._id)}
                   onSelect={handleSelect}
+                  hasActiveSelection={selectedIds.size > 0}
                 />
               </motion.div>
             )

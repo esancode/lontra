@@ -19,7 +19,7 @@
  *
  * O atalho global funciona mesmo com o app minimizado ou
  * sem foco — o usuário pode estar no VS Code e apertar
- * Ctrl+Shift+N para abrir o Lontra direto na Nota Rápida.
+ * Ctrl+Shift+N para abrir o Lontra direto na interface de IA.
  */
 
 export const QUICK_NOTE_SHORTCUT = 'Ctrl+Shift+N';

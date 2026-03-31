@@ -151,6 +151,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
             target.closest('.ProseMirror') || 
             target.closest('button') || 
             target.closest('input') ||
+            target.closest('textarea') ||
             target.closest('a')
           ) {
             return;

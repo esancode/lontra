@@ -126,8 +126,8 @@ const QuickNoteModal: React.FC<QuickNoteModalProps> = ({
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-muted)]">
           <div className="flex items-center gap-2">
-            <Zap size={16} className="text-[var(--accent-blue)]" />
-            <span className="font-mono text-sm text-[var(--text-primary)] font-medium">Nota Rápida</span>
+            <img src="/favicon.png" className="w-[20px] h-[20px] object-contain drop-shadow-sm" alt="Lontra" />
+            <span className="font-mono text-[15px] text-[var(--text-primary)] font-semibold tracking-tight">Lontra</span>
             <span
               className="text-[10px] font-mono px-1.5 py-0.5 rounded-full"
               style={{ background: 'var(--accent-blue-subtle)', color: 'var(--accent-blue)' }}
@@ -170,7 +170,7 @@ const QuickNoteModal: React.FC<QuickNoteModalProps> = ({
             {history.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-[200px] gap-2">
                 <Clock size={24} className="text-[var(--text-muted)]" />
-                <p className="text-sm text-[var(--text-muted)]">Nenhuma nota rápida ainda</p>
+                <p className="text-sm text-[var(--text-muted)]">O Lontra ainda não organizou nada</p>
               </div>
             ) : (
               <div className="flex flex-col gap-1">
@@ -205,8 +205,8 @@ const QuickNoteModal: React.FC<QuickNoteModalProps> = ({
                 ref={textareaRef}
                 value={rawText}
                 onChange={e => setRawText(e.target.value.slice(0, 4000))}
-                placeholder={`Joga tudo aqui. Pode ser bagunçado.\n\nex: bug no middleware de auth linha 47, token expira\nantes do esperado talvez o refresh nao ta funcionando\nno controller de usuarios tem um forEach que deveria\nser um map, revisar depois. relacionado com o PR #234`}
-                className="w-full resize-y text-sm leading-relaxed outline-none"
+                placeholder={`O que você precisa que eu organize?\n\nCole contexto de bugs, links importantes, pedaços de código ou pensamentos não estruturados aqui.\nEu lerei, formatarei e criarei as caixas certas para organizar a informação. Seu fluxo não para.`}
+                className="w-full resize-y text-[14px] leading-relaxed outline-none"
                 style={{
                   minHeight: 200,
                   maxHeight: 400,
@@ -245,7 +245,7 @@ const QuickNoteModal: React.FC<QuickNoteModalProps> = ({
                   title="Ctrl+Enter"
                 >
                   <Sparkles size={14} />
-                  Organizar com IA
+                  Organizar com a Lontra
                 </button>
               </div>
             </div>
@@ -260,10 +260,10 @@ const QuickNoteModal: React.FC<QuickNoteModalProps> = ({
               borderRadius: 'var(--radius-md)',
             }}
           >
-            <Sparkles
-              size={32}
-              className="text-[var(--accent-blue)]"
-              style={{ animation: 'spin 2s linear infinite' }}
+            <img 
+              src="/favicon.png" 
+              className="w-10 h-10 object-contain drop-shadow-md"
+              alt="Lontra Loading"
             />
             <div className="flex flex-col items-center gap-1">
               <p
@@ -288,9 +288,9 @@ const QuickNoteModal: React.FC<QuickNoteModalProps> = ({
           </div>
         ) : modalState === 'success' && result ? (
           <div className="p-6 flex flex-col items-center gap-4">
-            <CheckCircle size={40} className="text-[var(--accent-green)]" />
+            <img src="/favicon.png" className="w-12 h-12 object-contain drop-shadow-md brightness-110" alt="Lontra Success" />
             <div className="flex flex-col items-center gap-1 text-center">
-              <p className="font-mono text-lg font-semibold text-[var(--text-primary)]">Nota organizada!</p>
+              <p className="font-mono text-lg font-semibold text-[var(--text-primary)]">Organizado pela Lontra!</p>
               <p className="text-xs text-[var(--text-muted)]">Salva em:</p>
               <div className="flex items-center flex-wrap justify-center gap-1 text-xs max-w-[420px]">
                 {result.notePath.map((item: any, idx: number) => (

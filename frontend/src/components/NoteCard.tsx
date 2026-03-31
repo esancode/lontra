@@ -14,9 +14,10 @@ interface NoteCardProps {
   selected?: boolean;
   onSelect?: (id: string, isShift: boolean) => void;
   isDragging?: boolean;
+  hasActiveSelection?: boolean;
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen, selected = false, onSelect, isDragging = false }) => {
+const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen, selected = false, onSelect, isDragging = false, hasActiveSelection = false }) => {
   const { deleteNote, renameNote } = useAppStore();
   const [showConfirm, setShowConfirm] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
@@ -61,8 +62,11 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen, selected = false, onS
       <div 
         className={`group relative cursor-pointer w-full rounded-[var(--radius-md)] overflow-hidden bg-[var(--bg-secondary)] border transition-all duration-200 shadow-sm ${selected ? 'border-[var(--accent-blue)] ring-2 ring-[var(--accent-blue-subtle)] shadow-md' : 'border-[var(--border-default)] hover:bg-[var(--bg-tertiary)] hover:border-[var(--border-active)] hover:shadow-md'}`}
         onClick={(e) => {
+          e.stopPropagation()
           if (e.ctrlKey || e.metaKey || e.shiftKey) {
             onSelect && onSelect(note._id, e.shiftKey)
+          } else if (hasActiveSelection) {
+            onSelect && onSelect(note._id, false)
           } else {
             onOpen && onOpen()
           }

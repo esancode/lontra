@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useAppStore, Box } from '../store/useAppStore';
+import { useAppStore } from '../store/useAppStore';
+import { Box } from '../types/app.types';
 import { formatDate } from '../lib/utils';
 import ConfirmDialog from './ui/ConfirmDialog';
 import CardMenu from './ui/CardMenu';
@@ -12,6 +13,7 @@ interface BoxCardProps {
   selected?: boolean;
   onSelect?: (id: string, isShift: boolean) => void;
   isDragging?: boolean;
+  hasActiveSelection?: boolean;
 }
 
 const BoxCard: React.FC<BoxCardProps> = ({ 
@@ -20,7 +22,8 @@ const BoxCard: React.FC<BoxCardProps> = ({
   isDragOver = false, 
   selected = false, 
   onSelect, 
-  isDragging = false 
+  isDragging = false,
+  hasActiveSelection = false
 }) => {
   const { deleteBox, renameBox, notes, boxes } = useAppStore();
   const [showConfirm, setShowConfirm] = useState(false);
@@ -33,9 +36,12 @@ const BoxCard: React.FC<BoxCardProps> = ({
   const totalChildren = childNoteCount + childBoxCount;
 
   const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (e.ctrlKey || e.metaKey || e.shiftKey) {
       e.preventDefault();
       onSelect && onSelect(box._id, e.shiftKey);
+    } else if (hasActiveSelection) {
+      onSelect && onSelect(box._id, false);
     } else {
       onEnter && onEnter();
     }

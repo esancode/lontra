@@ -10,8 +10,8 @@ const QuickNoteButton: React.FC<QuickNoteButtonProps> = ({ onClick }) => {
     <button
       id="quick-note-fab"
       onClick={onClick}
-      title="Nota Rápida · Ctrl+Shift+N"
-      className="hidden sm:flex fixed items-center justify-center z-[500] transition-all duration-120 active:scale-95"
+      title="Lontra IA · Ctrl+Shift+N"
+      className="hidden sm:flex fixed items-center justify-center z-[500] transition-all duration-120 active:scale-95 group"
       style={{
         bottom: 24,
         right: 24,
@@ -29,7 +29,7 @@ const QuickNoteButton: React.FC<QuickNoteButtonProps> = ({ onClick }) => {
         (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
       }}
     >
-      <Zap size={20} />
+      <img src="/favicon.png" className="w-[20px] h-[20px] invert brightness-200 saturate-0" alt="Lontra IA" />
     </button>
   );
 };
