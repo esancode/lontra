@@ -1,5 +1,11 @@
 # 🦦 Lontra
 
+<p align="center">
+  <a href="https://lontra-1.onrender.com">
+    <img src="https://img.shields.io/badge/Acessar_Aplicação_Online-%233B82F6.svg?style=for-the-badge&logoColor=white" alt="Live Demo" />
+  </a>
+</p>
+
 <div align="center">
 
 **Context keeper for developers.**
