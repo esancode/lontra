@@ -284,6 +284,11 @@ ul[data-type="taskList"] li[data-checked="true"] > div { text-decoration: line-t
 
 /* --- PRINT / PDF EXPORT STYLES --- */
 @media print {
+  html, body, #root, .h-screen {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
   body {
     background-color: #0f1419 !important; /* bg-primary */
     color: #e6edf3 !important; /* text-primary */
@@ -291,7 +296,6 @@ ul[data-type="taskList"] li[data-checked="true"] > div { text-decoration: line-t
     print-color-adjust: exact !important;
   }
   
-  /* Esconder barras superiores, menus contextuais e ícones de arraste */
   .no-print,
   .sidebar,
   button,
@@ -299,20 +303,25 @@ ul[data-type="taskList"] li[data-checked="true"] > div { text-decoration: line-t
   .slash-menu,
   nav,
   .drag-handle-container,
-  #home-top-bar {
+  #home-top-bar,
+  .presentation-active button {
     display: none !important;
   }
   
   /* Resetar rolagem para mostrar todas as páginas e remover limites width */
   #main-scroll-container,
   .editor-content-wrapper,
-  .editor-scroll-container {
+  .editor-scroll-container,
+  .ProseMirror,
+  .editor-container {
     overflow: visible !important;
     max-width: 100% !important;
     width: 100% !important;
     height: auto !important;
-    padding: 0 40px !important;
+    min-height: auto !important;
+    padding: 0 !important;
     margin: 0 !important;
+    position: static !important;
   }
 
   /* Impedir quebras bizarras de página */

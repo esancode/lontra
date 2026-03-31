@@ -22,5 +22,5 @@
  * Ctrl+Shift+N para abrir o Lontra direto na interface de IA.
  */
 
-export const QUICK_NOTE_SHORTCUT = 'Ctrl+Shift+N';
-export const QUICK_NOTE_SHORTCUT_MAC = 'Cmd+Shift+N';
+export const QUICK_NOTE_SHORTCUT = 'Ctrl+Shift+K';
+export const QUICK_NOTE_SHORTCUT_MAC = 'Cmd+Shift+K';

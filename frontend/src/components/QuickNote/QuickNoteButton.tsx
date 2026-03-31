@@ -10,7 +10,7 @@ const QuickNoteButton: React.FC<QuickNoteButtonProps> = ({ onClick }) => {
     <button
       id="quick-note-fab"
       onClick={onClick}
-      title="Lontra IA · Ctrl+Shift+N"
+      title="Lontra IA · Ctrl+Shift+K"
       className="hidden sm:flex fixed items-center justify-center z-[500] transition-all duration-120 active:scale-95 group"
       style={{
         bottom: 24,

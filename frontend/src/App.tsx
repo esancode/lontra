@@ -13,7 +13,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const keyHandler = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'n') {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         open();
       }

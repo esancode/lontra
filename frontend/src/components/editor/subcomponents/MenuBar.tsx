@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bold, Italic, Code, FileText, Heading1, Heading2, Heading3, Search, MoreHorizontal, Edit2, FolderInput, Clock, Trash2, Play } from 'lucide-react';
+import { Bold, Italic, Code, FileText, Heading1, Heading2, Heading3, Search, MoreHorizontal, Edit2, FolderInput, Clock, Trash2, Play, Printer } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import { useAppStore } from '../../../store/useAppStore';
 import { Note } from '../../../types/app.types';
@@ -300,6 +300,15 @@ const MenuBar: React.FC<MenuBarProps> = ({
           <Play className='size-4' />
         </button>
 
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className='flex items-center justify-center p-1.5 rounded-[var(--radius-sm)] bg-transparent w-[28px] h-[28px] text-[var(--accent-blue)] hover:bg-[var(--accent-blue-subtle)] transition-colors'
+          title="Exportar para PDF"
+        >
+          <Printer className='size-4' />
+        </button>
+
         <div className="relative" ref={moreMenuRef}>
           <button
             type="button"
@@ -341,6 +350,17 @@ const MenuBar: React.FC<MenuBarProps> = ({
               >
                 <Search size={14} className="opacity-70" />
                 Pesquisar (Ctrl+F)
+              </button>
+              
+              <div className="h-[1px] bg-[var(--border-active)] opacity-50 my-1 mx-1" />
+
+              <button 
+                type="button"
+                onClick={() => { setShowMoreMenu(false); window.print(); }}
+                className="w-full text-left px-3 py-1.5 flex items-center gap-2 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+              >
+                <Printer size={14} className="opacity-70" />
+                Exportar para PDF
               </button>
               
               <div className="h-[1px] bg-[var(--border-active)] opacity-50 my-1 mx-1" />

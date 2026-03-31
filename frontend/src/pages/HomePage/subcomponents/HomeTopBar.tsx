@@ -30,7 +30,7 @@ const HomeTopBar: React.FC<HomeTopBarProps> = ({
   onOpenQuickNote
 }) => {
   return (
-    <div className='sticky top-0 w-full flex-shrink-0 bg-[var(--bg-secondary)] border-b border-[var(--border-default)] px-3 h-[var(--topbar-height)] flex items-center gap-2 z-[120] shadow-sm'>
+    <div className='no-print sticky top-0 w-full flex-shrink-0 bg-[var(--bg-secondary)] border-b border-[var(--border-default)] px-3 h-[var(--topbar-height)] flex items-center gap-2 z-[120] shadow-sm'>
       <button
         type="button"
         onClick={goBack}
@@ -122,7 +122,7 @@ const HomeTopBar: React.FC<HomeTopBarProps> = ({
               type="button"
               onClick={onOpenQuickNote}
               className='hidden sm:flex items-center gap-1.5 border border-[var(--accent-blue)] bg-[var(--accent-blue)]/10 text-[var(--accent-blue)] h-[28px] px-2 sm:px-3 rounded-[var(--radius-sm)] text-[length:var(--text-xs)] hover:bg-[var(--accent-blue)] hover:text-white transition-all font-[var(--weight-medium)] group'
-              title="Lontra IA (Ctrl+Shift+N)"
+              title="Lontra IA (Ctrl+Shift+K)"
             >
               <img src="/favicon.png" className="w-[14px] h-[14px] drop-shadow-sm filter brightness-110 saturate-[1.2] invert-[0.3]" style={{filter: 'brightness(0) saturate(100%) invert(35%) sepia(85%) saturate(1637%) hue-rotate(200deg) brightness(98%) contrast(92%)'}} alt="Lontra" />
               <span className="hidden sm:inline">Lontra IA</span>
