@@ -1,10 +1,10 @@
 # 🦦 Lontra
 
 <p align="center">
-  <a href="https://lontra-1.onrender.com">
-    <img src="https://img.shields.io/badge/Acessar_Aplicação_Online-%233B82F6.svg?style=for-the-badge&logoColor=white" alt="Live Demo" />
-  </a>
+  <img src="https://img.shields.io/badge/Status-Em_Atualização-%239D4EDD.svg?style=for-the-badge&logo=gear&logoColor=white" alt="Em Atualização" />
 </p>
+
+> ⚠️ **Aviso:** O Lontra está passando por uma reestruturação e **não se encontra mais aberto para acesso público no momento**. Novas funcionalidades e melhorias na arquitetura estão sendo implementadas.
 
 <div align="center">
 
