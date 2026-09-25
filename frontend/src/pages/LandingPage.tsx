@@ -13,10 +13,7 @@ const LandingPage: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // O botão está aproximadamente nas coordenadas:
-  // X: 64% a 89% da largura
-  // Y: 74% a 83% da altura
-  const buttonStyle: React.CSSProperties = {
+  const buttonStyleHorizontal: React.CSSProperties = {
     position: 'absolute',
     left: '64%',
     top: '74%',
@@ -24,41 +21,35 @@ const LandingPage: React.FC = () => {
     height: '9%',
     cursor: 'pointer',
     zIndex: 10,
-    // border: '2px solid red' // Descomente para debugar a posição
   };
 
-  const containerStyle: React.CSSProperties = isPortrait
-    ? {
-        position: 'absolute',
-        top: '100%',
-        left: 0,
-        width: '100vh',
-        height: '100vw',
-        transform: 'rotate(-90deg)',
-        transformOrigin: 'left top',
-        backgroundColor: '#000509',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden'
-      }
-    : {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: '#000509',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden'
-      };
+  const buttonStyleVertical: React.CSSProperties = {
+    position: 'absolute',
+    left: '15%',
+    top: '84%',
+    width: '70%',
+    height: '8%',
+    cursor: 'pointer',
+    zIndex: 10,
+  };
+
+  const containerStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: '#000509',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden'
+  };
 
   const imageContainerStyle: React.CSSProperties = {
     position: 'relative',
     height: '100%',
-    aspectRatio: '16/9', // A imagem aparenta ser 16:9
+    aspectRatio: isPortrait ? '9/16' : '16/9',
     maxWidth: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -69,12 +60,12 @@ const LandingPage: React.FC = () => {
     <div style={containerStyle}>
       <div style={imageContainerStyle}>
         <img 
-          src="/lontraai.png" 
+          src={isPortrait ? "/lontraaivertical.jfif" : "/lontraai.png"} 
           alt="Lontra AI Landing Page" 
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
         <div 
-          style={buttonStyle} 
+          style={isPortrait ? buttonStyleVertical : buttonStyleHorizontal} 
           onClick={() => navigate('/app')}
           title="Testar Lontra AI"
         />

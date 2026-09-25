@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
   const setTheme = () => {};
 
   const goToBox = useCallback((id: string | null) => { 
-    if (!id) navigate('/'); 
+    if (!id) navigate('/app'); 
     else navigate(`/box/${id}`);
   }, [navigate]);
 

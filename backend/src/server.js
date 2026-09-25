@@ -29,12 +29,11 @@ app.use('/api/boxes', identify, boxRoutes);
 app.use('/api/search', identify, searchRoutes);
 app.use('/api/quick-note', identify, quicknoteRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend', 'dist', 'index.html'));
-  });
-}
+// Servir a interface sempre que acessada pela URL raiz, independentemente do NODE_ENV
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend', 'dist', 'index.html'));
+});
 
 connectDB().then(() => {
   app.listen(PORT, () => {
