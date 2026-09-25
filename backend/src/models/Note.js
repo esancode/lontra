@@ -44,7 +44,10 @@ const noteSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-noteSchema.index({ "$**": "text" });
+noteSchema.index(
+    { "$**": "text" },
+    { language_override: "dummy_language_override_field" }
+);
 noteSchema.index({ boxId: 1, ownerId: 1 });
 noteSchema.index({ order: 1 });
 

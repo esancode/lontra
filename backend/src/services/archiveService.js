@@ -92,7 +92,7 @@ export async function saveNote(aiResult, ownerId) {
 }
 
 export async function getUserBoxStructure(ownerId) {
-  const boxes = await Box.find({ ownerId }).sort({ order: 1 }).lean();
+  const boxes = await Box.find({ ownerId, name: { $ne: 'Rascunhos' } }).sort({ order: 1 }).lean();
 
   return boxes.map(box => {
     const ancestors = [];

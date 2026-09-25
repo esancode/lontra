@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import CommandPalette from "./components/ui/CommandPalette"
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts"
 import QuickNoteModal from "./components/QuickNote/QuickNoteModal"
 import QuickNoteButton from "./components/QuickNote/QuickNoteButton"
 import { useQuickNote } from "./hooks/useQuickNote"
+
+import LandingPage from "./pages/LandingPage"
 
 const App: React.FC = () => {
   useKeyboardShortcuts();
@@ -27,9 +29,12 @@ const App: React.FC = () => {
     };
   }, [open]);
 
+  const location = useLocation();
+  const isLandingPage = location.pathname === '/';
+
   return (
     <div className="bg-[var(--bg-primary)] min-h-screen text-[var(--text-primary)]">
-      <CommandPalette />
+      {!isLandingPage && <CommandPalette />}
       <QuickNoteModal
         isOpen={isOpen}
         modalState={modalState}
@@ -39,9 +44,10 @@ const App: React.FC = () => {
         onClose={close}
         onProcess={process}
       />
-      <QuickNoteButton onClick={open} />
+      {!isLandingPage && <QuickNoteButton onClick={open} />}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/app" element={<HomePage />} />
         <Route path="/box/:boxId" element={<HomePage />} />
         <Route path="/note/:noteId" element={<HomePage />} />
       </Routes>

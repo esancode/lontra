@@ -17,9 +17,9 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ message: 'Texto muito longo. Máximo 4000 caracteres.' });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GROQ_API_KEY) {
     return res.status(503).json({
-      message: 'A chave de API da Anthropic não está configurada. Adicione ANTHROPIC_API_KEY ao .env do servidor.',
+      message: 'A chave de API do Groq não está configurada. Adicione GROQ_API_KEY ao .env do servidor.',
       code: 'API_KEY_MISSING',
     });
   }
@@ -37,10 +37,21 @@ router.post('/', async (req, res) => {
 
     await Note.deleteOne({ _id: draftInfo.draftId, ownerId });
 
+    // Verifica se a caixa Rascunhos ficou vazia, se sim, deleta a caixa
+    const draftNotesCount = await Note.countDocuments({ boxId: draftInfo.draftBoxId, ownerId });
+    if (draftNotesCount === 0) {
+      await import('../models/Box.js').then(({ default: Box }) => 
+        Box.deleteOne({ _id: draftInfo.draftBoxId, ownerId })
+      );
+    }
+
     return res.status(201).json(result);
 
   } catch (error) {
-    console.error('[QuickNote] Erro:', error.message);
+    console.error('\n==================== ERROR NO BACKEND ====================');
+    console.error('[QuickNote] Erro principal:', error.message);
+    if (error.stack) console.error('[QuickNote] Stack:', error.stack);
+    console.error('==========================================================\n');
 
     if (draftInfo) {
       return res.status(200).json({

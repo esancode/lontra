@@ -1,4 +1,45 @@
-import Anthropic from '@anthropic-ai/sdk';
+import Groq from 'groq-sdk';
+
+export async function processQuickNote(rawText, userBoxStructure) {
+  if (!process.env.GROQ_API_KEY) {
+    throw new Error('GROQ_API_KEY não configurada. Acesse https://console.groq.com/keys para obter sua chave gratuita.');
+  }
+
+  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  
+  const MAX_RETRIES = 2;
+  let attempt = 0;
+
+  while (attempt <= MAX_RETRIES) {
+    try {
+      const response = await groq.chat.completions.create({
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: buildUserPrompt(rawText, userBoxStructure) }
+        ],
+        model: 'qwen/qwen3.8-27b',
+        temperature: 0.1,
+        response_format: { type: "json_object" }
+      });
+
+      const raw = response.choices[0]?.message?.content;
+      if (!raw) throw new Error("Resposta vazia da IA");
+
+      const parsed = tryParseJson(raw);
+      return validateAiResult(parsed);
+      
+    } catch (err) {
+      if (err.status === 503 || err.status === 429) {
+        attempt++;
+        if (attempt > MAX_RETRIES) throw new Error(`Groq sobrecarregado após tentar várias vezes: ${err.message}`);
+        console.log(`[Groq] Retentativa ${attempt}...`);
+        await new Promise(res => setTimeout(res, 2000));
+      } else {
+        throw new Error(`IA falhou: ${err.message}`);
+      }
+    }
+  }
+}
 
 const VALID_ICONS = [
   'vscode-icons:file-type-js-official',
@@ -201,28 +242,4 @@ function tryParseJson(raw) {
   }
 }
 
-export async function processQuickNote(rawText, userBoxStructure) {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    throw new Error('ANTHROPIC_API_KEY não configurada. Acesse https://console.anthropic.com para obter sua chave.');
-  }
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-5',
-    max_tokens: 4096,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: buildUserPrompt(rawText, userBoxStructure) }],
-  });
-
-  const raw = response.content[0].text;
-  let parsed;
-
-  try {
-    parsed = tryParseJson(raw);
-  } catch (parseErr) {
-    throw new Error(`IA retornou JSON inválido: ${parseErr.message}`);
-  }
-
-  return validateAiResult(parsed);
-}
